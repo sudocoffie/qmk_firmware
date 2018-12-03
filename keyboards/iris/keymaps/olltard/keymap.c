@@ -14,7 +14,8 @@ extern keymap_config_t keymap_config;
 enum custom_keycodes {
   DVORAK = SAFE_RANGE,
   LOWER,
-  RAISE
+  RAISE,
+  ARROW
 };
 
 #define KC_ KC_TRNS
@@ -23,6 +24,7 @@ enum custom_keycodes {
 #define KC_LOWR LOWER
 #define KC_RASE RAISE
 #define KC_RST RESET
+#define KC_OLLAR ARROW
 
 #define KC_AA NO_AA
 #define KC_AE NO_AE
@@ -30,6 +32,8 @@ enum custom_keycodes {
 #define KC_LESS NO_LESS
 #define KC_QQQ NO_QUES
 #define KC_DOLLA NO_DLR
+#define KC_SHLASH LSFT(KC_7)
+#define KC_BSHLASH NO_BSLS 
 
 // Helpful defines
 #define _______ KC_TRNS
@@ -39,26 +43,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //,----+----+----+----+----+----.              ,----+----+----+----+----+----.
       ESC , 1  , 2  , 3  , 4  , 5  ,                6  , 7  , 8  , 9  , 0  ,DOLLA,
     //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-      TAB , SLSH,COMM,DOT,  P,   Y  ,                F  , G  , C , R  , L  , QQQ,
+      TAB , SLSH,COMM,DOT,  P,   Y  ,                F  , G  , C , R  , L  , OLLAR,
     //|----+----+----+----+----+----|              |----+----+----+----+----+----|
       LSFT, A  , O  , E  , U  , I  ,                D  , H  , T  , N  , S,  BSLS,
     //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
-      LSFT,QQQ, Q  , J  , K  ,X, LGUI ,       RASE, B  , M  , W,   V,   Z,  SLSH,
+      LSFT,QQQ, Q  , J  , K  ,X, LGUI ,       END, B  , M  , W,   V,   Z,  SHLASH,
     //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
                         RCTL,LOWR,SPC ,         BSPC ,RASE,LALT
     //                  `----+----+----'        `----+----+----'
   ),
   [_LOWER] = LAYOUT(
       //,-------+-------+-------+-------+-------+-------.                    ,-------+-------+-------+-------+-------+-------.
-        NO_TILD,KC_EXLM,NO_AT ,KC_HASH,NO_DLR ,KC_PERC,                     NO_CIRC,NO_AMPR,NO_ASTR,NO_SLSH,NO_LPRN,NO_RPRN,
+        NO_TILD,KC_EXLM,NO_AT ,KC_HASH,NO_DLR ,KC_PERC,                     NO_CIRC,NO_AMPR,NO_ASTR,NO_BSLS,NO_LPRN,NO_RPRN,
       //|-------+-------+-------+-------+-------+-------|                    |-------+-------+-------+-------+-------+-------|
-        RALT(KC_TAB),NO_OSLH,NO_AE, NO_AA, KC_GRV,LSFT(KC_GRV),                  NO_LCBR,KC_TRNS,KC_UP,NO_PIPE,NO_LCBR,NO_ACUT,
+        RALT(KC_TAB),NO_OSLH,NO_AE, NO_AA, KC_GRV,LSFT(KC_GRV),                 NO_LCBR,NO_RCBR,KC_UP,NO_PIPE,NO_LCBR,NO_ACUT,
       //|-------+-------+-------+-------+-------+-------|                    |-------+-------+-------+-------+-------+-------|
         KC_LSFT,LCTL(KC_A),LCTL(KC_S),KC_TRNS,LCTL(KC_F),NO_BSLS,            KC_TRNS, KC_LEFT,KC_DOWN,KC_RGHT,NO_LBRC,NO_RBRC,
       //|-------+-------+-------+-------+-------+-------+-------.    ,-------|-------+-------+-------+-------+-------+-------%%¢#”^^&*&^%$
-        KC_LSFT,LCTL(KC_Z),LCTL(KC_Z),LCTL(KC_X),LCTL(KC_C),LCTL(KC_V),KC_LGUI,  NO_ASTR,NO_ASTR,LSFT(NO_LBRC),LSFT(NO_RBRC),KC_TRNS,NO_LESS,NO_GRTR,
+        KC_LSFT,LCTL(KC_Z),LCTL(KC_Z),LCTL(KC_X),LCTL(KC_C),LCTL(KC_V),KC_LGUI,  KC_HOME,NO_ASTR,NO_LBRC,NO_RBRC,KC_TRNS,NO_LESS,NO_GRTR,
       //`-------+-------+-------+--+----+-------+-------+-------/    \-------+-------+-------+-------+-------+-------+-------'
-                                      KC_TRNS,KC_TRNS,KC_TRNS,         KC_ENT,LSFT(NO_LBRC),LSFT(NO_RBRC)
+                                      KC_TRNS,KC_TRNS,KC_TRNS,         KC_ENT, KC_HOME,KC_END
       //                              `-------+-------+-------'        `-------+-------+-------'
     ),
     [_RAISE] = LAYOUT(
@@ -107,6 +111,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case ARROW:
+      if (record->event.pressed) {
+        SEND_STRING("/");
+        SEND_STRING(SS_DOWN(X_LSHIFT)SS_TAP(X_NONUS_BSLASH)SS_UP(X_LSHIFT));
+
+      }
   }
   return true;
 }
