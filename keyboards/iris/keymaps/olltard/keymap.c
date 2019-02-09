@@ -7,12 +7,14 @@
 extern keymap_config_t keymap_config;
 
 #define _DVORAK 0
+#define _QWERTY 0
 #define _LOWER 1
 #define _RAISE 2
-#define _EMPTY 16
+#define _EMPTY 15
 
 enum custom_keycodes {
   DVORAK = SAFE_RANGE,
+  QWERTY,
   LOWER,
   RAISE,
   ARROW
@@ -52,6 +54,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                         RCTL,LOWR,SPC ,         BSPC ,RASE,LALT
     //                  `----+----+----'        `----+----+----'
   ),
+    [_QWERTY] = LAYOUT_kc(
+    //,----+----+----+----+----+----.              ,----+----+----+----+----+----.
+      ESC , 1  , 2  , 3  , 4  , 5  ,                6  , 7  , 8  , 9  , 0  ,BSPC,
+    //|----+----+----+----+----+----|              |----+----+----+----+----+----|
+      TAB , Q  , W  , E  , R  , T  ,                Y  , U  , I  , O  , P  , AA ,
+    //|----+----+----+----+----+----|              |----+----+----+----+----+----|
+      LSFT, A  , S  , D  , F  , G  ,                H  , J  , K  , L  , OE , AE ,
+    //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
+      LCTL, Z  , X  , C  , V  , B  ,LGUI ,     END, N  , M  ,COMM,DOT ,SLSH,MINS,
+    //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
+                        LGUI,LOWR,SPC ,         BSPC ,RASE,LALT
+    //                  `----+----+----'        `----+----+----'
+  ),
   [_LOWER] = LAYOUT(
       //,-------+-------+-------+-------+-------+-------.                    ,-------+-------+-------+-------+-------+-------.
         NO_TILD,KC_EXLM,NO_AT ,KC_HASH,NO_DLR ,KC_PERC,                     NO_CIRC,NO_AMPR,NO_ASTR,NO_BSLS,NO_LPRN,NO_RPRN,
@@ -73,21 +88,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       //|-------+-------+-------+-------+-------+-------|                    |-------+-------+-------+-------+-------+-------|
         KC_TRNS,KC_4   ,KC_5   ,KC_6   ,NO_PLUS,NO_SLSH,                     KC_HOME,RALT(NO_ASTR),KC_PGUP,KC_END ,KC_TRNS,NO_BSLS,
       //|-------+-------+-------+-------+-------+-------+-------.    ,-------|-------+-------+-------+-------+-------+-------|
-        KC_TRNS,KC_1   ,KC_2   ,KC_3   ,KC_0   ,NO_EQL ,KC_TRNS,     KC_TRNS,NO_ASTR,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
+        KC_TRNS,KC_1   ,KC_2   ,KC_3   ,KC_0   ,NO_EQL ,TG(_QWERTY),     TG(_DVORAK),NO_ASTR,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
       //`-------+-------+-------+--+----+-------+-------+-------/    \-------+-------+-------+-------+-------+-------+-------'
                                       KC_TRNS,KC_TRNS,KC_TRNS,         KC_TRNS,KC_TRNS,KC_TRNS
       //                              `-------+-------+-------'        `-------+-------+-------'
     )
 };
+
 void persistent_default_layer_set(uint16_t default_layer) {
   eeconfig_update_default_layer(default_layer);
   default_layer_set(default_layer);
 }
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case DVORAK:
       if (record->event.pressed) {
         persistent_default_layer_set(1UL<<_DVORAK);
+      }
+      return false;
+      break;
+    case QWERTY:
+      if (record->event.pressed) {
+        persistent_default_layer_set(1UL<<_QWERTY);
       }
       return false;
       break;
@@ -117,6 +140,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         SEND_STRING(SS_DOWN(X_LSHIFT)SS_TAP(X_NONUS_BSLASH)SS_UP(X_LSHIFT));
 
       }
+      return false;
+      break;
   }
   return true;
 }
