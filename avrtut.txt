@@ -1,0 +1,1 @@
+avrdude C:\Users\filip\Desktop\arduino-1.8.9\hardware\tools\avr/etc/avrdude.conf -v -patmega32u4 -cavr109 -PCOM8 -b57600 -D -Uflash:w:C:\Users\filip\AppData\Local\Temp\arduino_build_873431/Blink.ino.hex:i
