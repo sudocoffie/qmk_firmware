@@ -5,13 +5,13 @@
 
 extern keymap_config_t keymap_config;
 
-#define _QWERTY 0
+#define _DVORAK 0
 #define _LOWER 1
 #define _RAISE 2
 #define _EMPTY 16
 
 enum custom_keycodes {
-  QWERTY = SAFE_RANGE,
+  DVORAK = SAFE_RANGE,
   LOWER,
   RAISE
 };
@@ -26,34 +26,35 @@ enum custom_keycodes {
 #define KC_AA NO_AA
 #define KC_AE NO_AE
 #define KC_OE NO_OSLH
+#define KC_NO_TILD NO_TILD
+#define KC_NO_MINS NO_MINS
+#define KC_APOSSV NO_APOS
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-
-  [_QWERTY] = LAYOUT_kc(
+  [_DVORAK] = LAYOUT_kc(
   //,----+----+----+----+----+----.              ,----+----+----+----+----+----.
      ESC , 1  , 2  , 3  , 4  , 5  ,                6  , 7  , 8  , 9  , 0  ,BSPC,
+  //|----+----+----+----+----+-----|              |----+----+----+----+----+----|
+     TAB , AA  ,COMM ,DOT, P  , Y  ,                F  , G  , C  , R  , L  ,APOSSV,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-     TAB , Q  , W  , E  , R  , T  ,                Y  , U  , I  , O  , P  , AA ,
-  //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-     LSFT, A  , S  , D  , F  , G  ,                H  , J  , K  , L  , OE , AE ,
+     LSFT, A  , O  , E  , U  , I  ,                D  , H  , T  , N  , S  , NO_MINS,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
-     LCTL, Z  , X  , C  , V  , B  ,DEL ,     BSPC, N  , M  ,COMM,DOT ,SLSH,MINS,
+     LALT, OE , AE , Q  , J  , K  ,LGUI,     ESC , X  , B  , M  ,  W , V  , Z  ,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
-                       LGUI,LOWR,SPC ,         ENT ,RASE,LALT
+                       LCTL, SPC,LOWR,         RASE ,BSPC,ENT
   //                  `----+----+----'        `----+----+----'
   ),
-
   [_LOWER] = LAYOUT(
   //,-------+-------+-------+-------+-------+-------.                    ,-------+-------+-------+-------+-------+-------.
-     NO_TILD,KC_EXLM,NO_AT  ,KC_HASH,NO_DLR ,KC_PERC,                     NO_CIRC,NO_AMPR,NO_ASTR,NO_SLSH,NO_LPRN,NO_RPRN,
+     NO_TILD,KC_EXLM,NO_AT  ,KC_HASH,NO_DLR ,KC_PERC,                     NO_CIRC,NO_AMPR,NO_ASTR,NO_SLSH,NO_LPRN,S(KC_MINS),
   //|-------+-------+-------+-------+-------+-------|                    |-------+-------+-------+-------+-------+-------|
-     NO_ACUT,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,                     KC_TRNS,KC_TRNS,KC_TRNS,NO_PIPE,NO_LCBR,NO_RCBR,
+     NO_ACUT,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,                     KC_TRNS,NO_LBRC,NO_RBRC,NO_PIPE,NO_LCBR,NO_RCBR,
   //|-------+-------+-------+-------+-------+-------|                    |-------+-------+-------+-------+-------+-------|
-     KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,NO_BSLS,                     KC_LEFT,KC_DOWN,KC_UP  ,KC_RGHT,NO_LBRC,NO_RBRC,
+     KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,NO_BSLS,                     KC_TRNS,KC_LEFT,KC_DOWN ,KC_UP,KC_RIGHT,NO_LBRC,
   //|-------+-------+-------+-------+-------+-------+-------.    ,-------|-------+-------+-------+-------+-------+-------|
      KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,     KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,NO_LESS,NO_GRTR,
   //`-------+-------+-------+--+----+-------+-------+-------/    \-------+-------+-------+-------+-------+-------+-------'
-                                   KC_TRNS,KC_TRNS,KC_TRNS,         KC_TRNS,KC_TRNS,KC_TRNS
+                                   KC_TRNS,KC_TRNS,KC_TRNS,         KC_ENT ,KC_HOME,KC_END
   //                              `-------+-------+-------'        `-------+-------+-------'
   ),
 
@@ -63,7 +64,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------+-------+-------+-------+-------+-------|                    |-------+-------+-------+-------+-------+-------|
      NO_GRV ,KC_7   ,KC_8   ,KC_9   ,NO_MINS,NO_ASTR,                     KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,NO_PIPE,
   //|-------+-------+-------+-------+-------+-------|                    |-------+-------+-------+-------+-------+-------|
-     KC_TRNS,KC_4   ,KC_5   ,KC_6   ,NO_PLUS,NO_SLSH,                     KC_HOME,KC_PGDN,KC_PGUP,KC_END ,KC_TRNS,NO_BSLS,
+     KC_TRNS,KC_4   ,KC_5   ,NO_EQL ,NO_PLUS,NO_SLSH,                     KC_PGDN,KC_HOME,KC_END ,KC_PGUP,KC_TRNS,NO_BSLS,
   //|-------+-------+-------+-------+-------+-------+-------.    ,-------|-------+-------+-------+-------+-------+-------|
      KC_TRNS,KC_1   ,KC_2   ,KC_3   ,KC_0   ,NO_EQL ,KC_TRNS,     KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
   //`-------+-------+-------+--+----+-------+-------+-------/    \-------+-------+-------+-------+-------+-------+-------'
@@ -79,9 +80,9 @@ void persistent_default_layer_set(uint16_t default_layer) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case QWERTY:
+    case DVORAK:
       if (record->event.pressed) {
-        persistent_default_layer_set(1UL<<_QWERTY);
+        persistent_default_layer_set(1UL<<_DVORAK);
       }
       return false;
       break;
