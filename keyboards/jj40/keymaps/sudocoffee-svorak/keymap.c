@@ -3,7 +3,7 @@
 #define _DVORAK 0
 #define _LOWER  1
 #define _RAISE  2
-#define _FUNC    3
+#define _FUNC   3
 
 #define NAV_TAP LT(_NAV, KC_SPC)
 
