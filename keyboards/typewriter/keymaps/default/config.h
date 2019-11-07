@@ -15,5 +15,5 @@
  */
 
 #pragma once
-
+#include "keymap_swedish.h"
 // place overrides here

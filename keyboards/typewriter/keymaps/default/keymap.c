@@ -15,39 +15,44 @@
  */
 #include QMK_KEYBOARD_H
 
+#define _DVORAK 0
+#define _LOWER  1
+#define _RAISE  2
+#define _FUNC   3
+
+#define ____ KC_TRNS
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
-  QMKBEST = SAFE_RANGE,
-  QMKURL
+  DVORAK = SAFE_RANGE,
+  LOWER,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [0] = LAYOUT( /* Base */
-    KC_0, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_A, KC_B, KC_B, KC_B, KC_B, KC_B, \
-        KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, \
-        KC_B,      KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, \
-        KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, KC_B, \
-                            KC_B,                KC_B
+  [_DVORAK] = LAYOUT( /* Base */
+    KC_ESC, NO_TILD, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_UNDS, NO_LCBR, NO_RCBR, NO_BSLS, \
+        KC_TAB, KC_TAB, NO_AA, KC_COMM, KC_DOT, KC_P, KC_Y, KC_F, KC_G, KC_C, KC_R, KC_L, NO_SLSH, NO_APOS, KC_BSPC, \
+        MO(_RAISE), KC_LSFT, KC_A, KC_O, KC_E, KC_U, KC_I, KC_D, KC_H, KC_T, KC_N, KC_S,NO_MINS, KC_ENT, \
+        KC_LALT, KC_LCTL, KC_LCTL, NO_OSLH, NO_AE, KC_Q, KC_J, KC_K, KC_X, KC_B, KC_M, KC_W, KC_V, KC_Z, KC_LGUI, \
+                            MO(_LOWER),                KC_SPC
+  ),
+  [_LOWER] = LAYOUT(
+    NO_TILD, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, \
+    ____, ____, ____, ____, ____, ____, NO_MINS, ____, ____, ____, ____, ____, ____, ____, ____, \
+      ____, ____, ____, ____, NO_PLUS, NO_EQL, ____, ____, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, ____, ____, \
+    ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, \
+                            ____,                ____
+  ),
+  [_RAISE] = LAYOUT(
+    ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, \
+    ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, \
+      ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, \
+    ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, \
+                            ____,                ____
   ),
 };
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case QMKBEST:
-      if (record->event.pressed) {
-        // when keycode QMKBEST is pressed
-        SEND_STRING("QMK is the best thing ever!");
-      } else {
-        // when keycode QMKBEST is released
-      }
-      break;
-    case QMKURL:
-      if (record->event.pressed) {
-        // when keycode QMKURL is pressed
-        SEND_STRING("https://qmk.fm/" SS_TAP(X_ENTER));
-      } else {
-        // when keycode QMKURL is released
-      }
+    case DVORAK:
       break;
   }
   return true;
