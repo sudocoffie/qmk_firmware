@@ -1,5 +1,7 @@
 #include QMK_KEYBOARD_H
 
+#include "keymap_swedish.h"
+
 #define _DVORAK 0
 #define _LOWER  1
 #define _RAISE  2
@@ -66,17 +68,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_ortho_4x12( \
-  _______,  KC_1,    KC_2,   KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    NO_ACUT, \
+  NO_PIPE,  KC_1,    KC_2,   KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    NO_ACUT, \
   _______,S(KC_GRV),KC_GRV,  NO_LCBR,  NO_RCBR,  NO_GRTR,   NO_LESS,   KC_MINS, NO_EQL,  NO_LBRC, NO_RBRC, KC_ENT, \
   _______, _______, NO_ACUT, NO_QUOT, NO_AM, KC_GRV, _______,  CC_ARRW, _______, _______, _______, NO_BSLS, \
   _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY \
 ),
 
 [_FUNC] = LAYOUT_ortho_4x12( \
-    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  \
-    _______, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, _______, _______, _______,  CC_CBR, CC_BRC, CC_PRN, KC_VOLU, \
-    _______, KC_CALC, RGB_HUD, RGB_SAD, RGB_VAD, KC_WBAK, KC_WFWD, BL_DEC,  _______, _______, KC_PSCR, KC_VOLD, \
-    _______, _______, RGB_MOD, _______, _______, _______, _______, _______, _______, _______, _______, _______ \
+    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F10,  KC_7,    KC_8,    KC_9,   KC_F11,  KC_F12,  \
+    _______, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, _______, _______, KC_4,    KC_5,    KC_6,   CC_PRN,  KC_VOLU, \
+    _______, KC_CALC, RGB_HUD, RGB_SAD, RGB_VAD, KC_WBAK, _______, KC_1,    KC_2,    KC_3,   KC_PSCR, KC_VOLD, \
+    _______, _______, RGB_MOD, _______, _______, _______, _______, _______, KC_0, _______, _______, _______ \
 )
 };
 
